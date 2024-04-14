@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About</title>
+  <link rel="stylesheet" href="/css/main.css" />
+  <style>
+    /* Custom CSS styles */
+    .about-image {
+      width: 100%;
+      max-width: auto; /* Adjust this value as needed */
+      height: auto;
+      display: block;
+    }
+
+    .about-content {
+      margin-left: 10px;
+    }
+
+    .about-content p {
+      font-size: 18px;
+      line-height: 1.5;
+      color: #280404c7; /* Adjust the color as needed */
+    }
+  </style>
+</head>
+
+<body tabindex="-1">
+  <!-- Include navbar partial -->
+  <% include('partials/navbar', { page: '/about' }) %>
+
+  <div class="container mx-auto">
+    <div class="hero bg-base-200 rounded-lg p-6">
+      <div class="hero-content text-center">
+        <div class="max-w-md">
+          <h1 class="text-5xl font-bold">About</h1>
+          <p class="py-6">Everything you want to know about me - the designer &amp; developer.</p>
+        </div>
+      </div>
+    </div>
+
+    <br />
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+      <div>
+        <!-- Image with 16:9 aspect ratio -->
+        <img class="about-image" src="/aboutme.jpg" alt="About Me" />
+      </div>
+      <div class="about-content">
+        <p class="py-6">
+          Hello there! I'm Devankit, currently pursuing my studies in Computer Programming and Analysis at Seneca College.
+          I've always been fascinated by the world of technology and computers, which led me to embark on this exciting
+          journey of learning how to code and develop software. Alongside my academic pursuits, I also enjoy representing
+          my college as an extramural player for the Seneca College cricket team, where I get to showcase my skills and
+          passion for sports. With my knowledge in website building and a deep understanding of programming, I'm constantly
+          seeking new challenges and opportunities to grow both personally and professionally. Join me as I navigate through
+          the realms of programming, web development, and beyond!
+        </p>
+        <p>
+          Apart from my academic and extracurricular interests, I am also passionate about exploring different cultures
+          and cuisines. Traveling to new places and trying out diverse foods allows me to broaden my perspective and
+          appreciate the beauty of diversity. Whether it's savoring street food in bustling markets or dining at fine
+          restaurants, I enjoy the culinary adventures that come with exploring new destinations.
+        </p>
+        <p>
+          Furthermore, I have a keen interest in arts and creativity. In my free time, you'll often find me experimenting
+          with photography, sketching, or exploring other forms of artistic expression. Engaging in creative activities
+          helps me relax and unwind, while also stimulating my imagination and fostering innovation in my work.
+        </p>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

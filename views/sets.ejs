@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lego Collection</title>
+  <link rel="stylesheet" href="/css/main.css" />
+  <style>
+    .table-striped tr:nth-child(even) {
+      background-color: #f3f4f6;
+    }
+    
+    .table-striped img {
+      display: block;
+      margin: 0 auto;
+      max-width: 80px; /* Reduce width of image column */
+      max-height: calc(100vw * 0.6); /* 4:3 aspect ratio */
+    }
+
+    .table-striped td {
+      text-align: center;
+      vertical-align: middle;
+    }
+
+    .table-striped .btn {
+      margin-top: 10px; /* Increase spacing between name and button */
+    }
+  </style>
+</head>
+
+<body tabindex="-1">
+  <!-- Include navbar partial -->
+  <% include('partials/navbar', { page: '/lego/sets' }) %>
+
+  <div class="container mx-auto">
+    <div class="hero bg-base-200 rounded-lg p-6">
+      <div class="hero-content text-center ">
+        <div class="max-w-md">
+          <h1 class="text-5xl font-bold">Gathering</h1>
+          <p class="py-6">Design, Build, and Play: Enter the LEGO Playground of Possibilities</p>
+          <a href="/lego/sets" class="btn btn-primary">Get Started Now</a>
+        </div>
+      </div>
+    </div>
+
+    <br />
+
+    <table class="table-auto w-full table-striped">
+      <thead>
+        <tr>
+          <th class="px-4 py-2 border">Image</th>
+          <th class="px-4 py-2 border">Name</th>
+          <th class="px-4 py-2 border">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% sets.forEach(set => { %>
+        <tr>
+          <td class="border px-4 py-2"><img src="<%= set.img_url %>" alt="<%= set.name %>" class="w-full h-auto"></td>
+          <td class="border px-4 py-2"><%= set.name %></td>
+          <td class="border px-4 py-2"><a href="/lego/sets/<%= set.set_num %>" class="btn btn-primary">View Details</a></td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</body>
+
+</html>

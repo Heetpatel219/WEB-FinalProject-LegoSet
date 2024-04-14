@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lego Collection</title>
+  <link rel="stylesheet" href="/css/main.css" />
+</head>
+
+<body tabindex="-1">
+  <% include('partials/navbar', { page: '' }) %>
+  
+  <div class="container mx-auto">
+    <div class="hero bg-base-200 rounded-lg p-6">
+      <div class="hero-content text-center">
+        <div class="max-w-md">
+          <h1 class="text-5xl font-bold">Lego Sets</h1>
+          <p class="py-6" style="color: rgba(44, 1, 29, 0.615);">Below are the sets in the Lego Collection.</p>
+        </div>
+      </div>
+    </div>
+
+    <br />
+
+    <% sets.forEach(set => { %>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <img class="w-full rounded-lg" src="<%= set.img_url %>" alt="<%= set.name %>" />
+        </div>
+        <div class="prose">
+          <p>Name: <%= set.name %></p>
+          <p>Year: <%= set.year %></p>
+          <p>Theme: <%= set.theme.name %></p>
+          <p>Number of Parts: <%= set.num_parts %></p>
+          <!-- Edit button -->
+          <p><a href="/lego/editSet/<%= set.set_num %>" class="btn btn-primary">Edit</a></p>
+        </div>
+      </div>
+      <br />
+    <% }) %>
+
+  </div>
+</body>
+
+</html>
