@@ -13,9 +13,15 @@
  * Published URL: 
  ********************************************************************************/
 
-const express = require('express');
-const path = require('path');
-const legoData = require('./modules/legoSets');
+import express from 'express';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import fetch from 'node-fetch';
+import * as legoData from './modules/legoSets.js';  // Add .js extension
+
+// ES modules don't have __dirname, so we need to create it
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 const HTTP_PORT = process.env.PORT || 8080;
@@ -28,13 +34,15 @@ app.set('view engine', 'ejs');
 // Function to fetch random quote
 async function getRandomQuote() {
   try {
-    const fetch = await import('node-fetch').then((module) => module.default);
     const response = await fetch('https://api.quotable.io/random');
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
     const data = await response.json();
     return data.content;
   } catch (error) {
     console.error('Error fetching quote:', error);
-    throw new Error('An error occurred while fetching the quote.');
+    return "Unable to fetch quote at this time."; // Provide a fallback quote
   }
 }
 
@@ -162,4 +170,4 @@ legoData.initialize()
     console.error('Error initializing database:', error);
   });
 
-module.exports = app;
+export default app;

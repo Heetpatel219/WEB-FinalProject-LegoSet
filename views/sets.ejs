@@ -7,63 +7,66 @@
   <title>Lego Collection</title>
   <link rel="stylesheet" href="/css/main.css" />
   <style>
-    .table-striped tr:nth-child(even) {
-      background-color: #f3f4f6;
-    }
-    
-    .table-striped img {
-      display: block;
-      margin: 0 auto;
-      max-width: 80px; /* Reduce width of image column */
-      max-height: calc(100vw * 0.6); /* 4:3 aspect ratio */
+    .set-card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+      overflow: hidden;
     }
 
-    .table-striped td {
-      text-align: center;
-      vertical-align: middle;
+    .set-card:hover {
+      transform: translateY(-5px);
     }
 
-    .table-striped .btn {
-      margin-top: 10px; /* Increase spacing between name and button */
+    .set-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .set-info {
+      padding: 1.5rem;
+    }
+
+    .set-name {
+      font-size: 1.25rem;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
     }
   </style>
 </head>
 
-<body tabindex="-1">
-  <!-- Include navbar partial -->
-  <% include('partials/navbar', { page: '/lego/sets' }) %>
+<body>
+  <%- include('partials/navbar', { page: '/lego/sets' }) %>
 
   <div class="container mx-auto">
-    <div class="hero bg-base-200 rounded-lg p-6">
-      <div class="hero-content text-center ">
+    <div class="hero rounded-lg p-8 mb-8">
+      <div class="hero-content text-center">
         <div class="max-w-md">
-          <h1 class="text-5xl font-bold">Gathering</h1>
-          <p class="py-6">Design, Build, and Play: Enter the LEGO Playground of Possibilities</p>
-          <a href="/lego/sets" class="btn btn-primary">Get Started Now</a>
+          <h1 class="text-5xl font-bold text-indigo-900">LEGO Sets</h1>
+          <p class="py-6 text-gray-700">Explore our amazing collection of LEGO sets</p>
+          <a href="/lego/addSet" class="btn btn-primary">Add New Set</a>
         </div>
       </div>
     </div>
 
-    <br />
-
-    <table class="table-auto w-full table-striped">
-      <thead>
-        <tr>
-          <th class="px-4 py-2 border">Image</th>
-          <th class="px-4 py-2 border">Name</th>
-          <th class="px-4 py-2 border">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% sets.forEach(set => { %>
-        <tr>
-          <td class="border px-4 py-2"><img src="<%= set.img_url %>" alt="<%= set.name %>" class="w-full h-auto"></td>
-          <td class="border px-4 py-2"><%= set.name %></td>
-          <td class="border px-4 py-2"><a href="/lego/sets/<%= set.set_num %>" class="btn btn-primary">View Details</a></td>
-        </tr>
-        <% }) %>
-      </tbody>
-    </table>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <% sets.forEach(set => { %>
+        <div class="set-card">
+          <img src="<%= set.img_url %>" alt="<%= set.name %>" class="set-image">
+          <div class="set-info">
+            <h2 class="set-name"><%= set.name %></h2>
+            <p class="text-gray-600">Year: <%= set.year %></p>
+            <p class="text-gray-600">Parts: <%= set.num_parts %></p>
+            <div class="mt-4 flex gap-2">
+              <a href="/lego/sets/<%= set.set_num %>" class="btn btn-primary">View Details</a>
+              <a href="/lego/editSet/<%= set.set_num %>" class="btn btn-secondary">Edit</a>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    </div>
   </div>
 </body>
 

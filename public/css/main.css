@@ -62,6 +62,8 @@ body {
   /* 1 */
   line-height: inherit;
   /* 2 */
+  background: linear-gradient(135deg, #f0f4ff 0%, #e2eafc 100%);
+  min-height: 100vh;
 }
 
 /*
@@ -584,6 +586,7 @@ html {
 
 .container {
   width: 100%;
+  padding: 2rem;
 }
 
 @media (min-width: 640px) {
@@ -1138,6 +1141,12 @@ html {
     --tw-bg-opacity: 1;
     background-color: hsl(var(--b2) / var(--tw-bg-opacity));
   }
+
+  .table-zebra tr.hover:hover,
+  .table-zebra tr.hover:nth-child(even):hover {
+    --tw-bg-opacity: 1;
+    background-color: hsl(var(--b3) / var(--tw-bg-opacity));
+  }
 }
 
 .btn {
@@ -1215,11 +1224,21 @@ html {
   display: flex;
   flex-direction: column;
   border-radius: var(--rounded-box, 1rem);
+  background: white;
+  border-width: 1px;
+  --tw-border-opacity: 1;
+  border-color: hsl(var(--b2) / var(--tw-border-opacity));
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
 }
 
 .card:focus {
   outline: 2px solid transparent;
   outline-offset: 2px;
+}
+
+.card:hover {
+  transform: translateY(-5px);
 }
 
 .card-body {
@@ -1433,6 +1452,11 @@ html {
   display: none;
 }
 
+.form-control {
+  display: flex;
+  flex-direction: column;
+}
+
 .label {
   display: flex;
   -webkit-user-select: none;
@@ -1452,6 +1476,11 @@ html {
   place-items: center;
   background-size: cover;
   background-position: center;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  margin-bottom: 2rem;
 }
 
 .hero > * {
@@ -1673,10 +1702,11 @@ html {
   --tw-border-opacity: 1;
   border-color: hsl(var(--p) / var(--tw-border-opacity));
   --tw-bg-opacity: 1;
-  background-color: hsl(var(--p) / var(--tw-bg-opacity));
+  background-color: #4f46e5;
   --tw-text-opacity: 1;
   color: hsl(var(--pc) / var(--tw-text-opacity));
   outline-color: hsl(var(--p) / 1);
+  transition: all 0.3s ease;
 }
 
 .btn-primary.btn-active {
@@ -1852,6 +1882,13 @@ html {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
+.label-text {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  --tw-text-opacity: 1;
+  color: hsl(var(--bc) / var(--tw-text-opacity));
+}
+
 .input input:focus {
   outline: 2px solid transparent;
   outline-offset: 2px;
@@ -1859,6 +1896,10 @@ html {
 
 .input[list]::-webkit-calendar-picker-indicator {
   line-height: 1em;
+}
+
+.input-bordered {
+  --tw-border-opacity: 0.2;
 }
 
 .input:focus,
@@ -2077,6 +2118,10 @@ html {
   100% {
     transform: translateY(0);
   }
+}
+
+.select-bordered {
+  --tw-border-opacity: 0.2;
 }
 
 .select:focus {
@@ -2419,20 +2464,16 @@ html {
   flex: 1 1 0%;
 }
 
-.grow {
-  flex-grow: 1;
-}
-
 .table-auto {
   table-layout: auto;
 }
 
-.grid-cols-1 {
-  grid-template-columns: repeat(1, minmax(0, 1fr));
+.cursor-not-allowed {
+  cursor: not-allowed;
 }
 
-.items-center {
-  align-items: center;
+.grid-cols-1 {
+  grid-template-columns: repeat(1, minmax(0, 1fr));
 }
 
 .justify-end {
@@ -2531,6 +2572,14 @@ html {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
+.transition {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
 @media (min-width: 640px) {
   .sm\:flex {
     display: flex;
@@ -2551,4 +2600,14 @@ html {
   .lg\:grid-cols-3 {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
+}
+
+.table-striped {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.table-striped tr:nth-child(even) {
+  background-color: #f8fafc;
 }

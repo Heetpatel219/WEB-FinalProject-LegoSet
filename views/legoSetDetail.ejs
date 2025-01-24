@@ -6,26 +6,57 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><%= set.name %> - Lego Set Detail</title>
   <link rel="stylesheet" href="/css/main.css" />
+  <style>
+    .detail-card {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      padding: 2rem;
+    }
+
+    .detail-image {
+      border-radius: 8px;
+      max-height: 400px;
+      object-fit: contain;
+    }
+
+    .quote-box {
+      background: #f8fafc;
+      border-radius: 8px;
+      padding: 1rem;
+      margin: 1rem 0;
+      font-style: italic;
+    }
+  </style>
 </head>
 
 <body>
   <!-- Include navbar partial -->
   <%- include('partials/navbar', { page: '/lego/sets' }) %>
 
-  <div class="container mx-auto">
-    <div class="hero bg-base-200 rounded-lg p-6">
-      <div class="hero-content text-center">
-        <div class="max-w-md">
-          <h1 class="text-5xl font-bold"><%= set.name %></h1>
-          <p class="py-6">You are viewing detailed information about the set: <%= set.name %>.</p>
-          <img class="w-full" src="<%= set.img_url %>" alt="<%= set.name %>" />
-          <p>Year Released: <%= set.year %></p>
-          <p>Theme: <%= set.theme %></p>
-          <p>Number of Parts: <%= set.num_parts %></p>
-          <p id="quote"></p>
-          <a href="#" onclick="goBack(); return false;" class="btn btn-primary">Back to Sets</a>
-          <a href="/lego/editSet/<%= set.set_num %>" class="btn btn-primary">Edit</a>
+  <div class="container mx-auto max-w-4xl">
+    <div class="detail-card">
+      <h1 class="text-4xl font-bold text-center mb-6 text-indigo-900"><%= set.name %></h1>
+      <img class="detail-image mx-auto mb-6" src="<%= set.img_url %>" alt="<%= set.name %>" />
+      
+      <div class="grid grid-cols-2 gap-4 mb-6">
+        <div class="text-center">
+          <p class="text-gray-600">Year Released</p>
+          <p class="text-xl font-semibold"><%= set.year %></p>
         </div>
+        <div class="text-center">
+          <p class="text-gray-600">Number of Parts</p>
+          <p class="text-xl font-semibold"><%= set.num_parts %></p>
+        </div>
+      </div>
+
+      <div class="quote-box" id="quote">Loading quote...</div>
+
+      <div class="flex justify-center gap-4 mt-6">
+        <a href="/lego/sets" class="btn btn-primary">Back to Sets</a>
+        <a href="/lego/editSet/<%= set.set_num %>" class="btn btn-secondary">Edit Set</a>
+        <a href="/lego/deleteSet/<%= set.set_num %>" class="btn btn-error" 
+           onclick="return confirm('Are you sure you want to delete this set?')">Delete Set</a>
       </div>
     </div>
   </div>

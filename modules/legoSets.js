@@ -1,7 +1,10 @@
-require('dotenv').config();
-const Sequelize = require('sequelize');
-const setData = require("../data/setData");
-const themeData = require("../data/themeData");
+import dotenv from 'dotenv';
+import { Sequelize } from 'sequelize';
+import { readFile } from 'fs/promises';
+import { fileURLToPath } from 'url';
+import path from 'path';
+
+dotenv.config();
 
 // PostgreSQL database credentials
 const PGHOST = 'ep-white-cell-a5h9jm2f-pooler.us-east-2.aws.neon.tech';
@@ -9,6 +12,8 @@ const PGDATABASE = 'senecadb';
 const PGUSER = 'senecadb_owner';
 const PGPASSWORD = '2Ezaqpkfx1XV';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Define Sequelize instance
 let sequelize = new Sequelize(PGDATABASE, PGUSER, PGPASSWORD, {
@@ -24,7 +29,6 @@ let sequelize = new Sequelize(PGDATABASE, PGUSER, PGPASSWORD, {
     timestamps: false // Disable createdAt and updatedAt fields
   }
 });
-
 
 // Define Theme model
 const Theme = sequelize.define('Theme', {
@@ -54,6 +58,12 @@ async function initialize() {
     // Synchronize models with database and insert existing data
     await sequelize.sync().then(async () => {
       try {
+        const themeData = JSON.parse(
+          await readFile(new URL('../data/themeData.json', import.meta.url))
+        );
+        const setData = JSON.parse(
+          await readFile(new URL('../data/setData.json', import.meta.url))
+        );
         await Theme.bulkCreate(themeData);
         await Set.bulkCreate(setData);
         console.log("Data inserted successfully.");
@@ -111,7 +121,66 @@ async function getSetsByTheme(theme) {
   }
 }
 
+// Function to get all themes
+async function getAllThemes() {
+  try {
+    const themes = await Theme.findAll();
+    return themes;
+  } catch (error) {
+    throw new Error('Error fetching themes: ' + error.message);
+  }
+}
+
+// Function to add a new set
+async function addSet(setData) {
+  try {
+    const newSet = await Set.create(setData);
+    return newSet;
+  } catch (error) {
+    throw new Error('Error adding set: ' + error.message);
+  }
+}
+
+// Function to update a set
+async function updateSet(setNum, setData) {
+  try {
+    const set = await Set.update(setData, {
+      where: { set_num: setNum }
+    });
+    if (set[0] === 0) {
+      throw new Error('Set not found');
+    }
+    return set;
+  } catch (error) {
+    throw new Error('Error updating set: ' + error.message);
+  }
+}
+
+// Function to delete a set
+async function deleteSet(setNum) {
+  try {
+    const result = await Set.destroy({
+      where: { set_num: setNum }
+    });
+    if (result === 0) {
+      throw new Error('Set not found');
+    }
+    return result;
+  } catch (error) {
+    throw new Error('Error deleting set: ' + error.message);
+  }
+}
+
 // Initialize and export functions
 initialize();
 
-module.exports = { initialize, getAllSets, getSetByNum, getSetsByTheme };
+export { 
+  initialize, 
+  getAllSets, 
+  getSetByNum, 
+  getSetsByTheme,
+  getAllThemes,
+  addSet,
+  updateSet,
+  deleteSet 
+};
